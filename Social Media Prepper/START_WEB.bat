@@ -36,7 +36,7 @@ echo Opening Social Studio in your browser...
 echo.
 echo Press Ctrl+C to stop the server when done.
 echo.
-streamlit run social_studio_web.py
+streamlit run app.py
 
 REM Deactivate virtual environment
 deactivate

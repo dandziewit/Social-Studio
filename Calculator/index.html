@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Calculator - Word Problem Solver</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="calculator">
+            <!-- Header -->
+            <div class="header">
+                <h1>AI Calculator</h1>
+                <p>Standard Calculator & Word Problem Solver</p>
+            </div>
+
+            <!-- Mode Toggle -->
+            <div class="mode-toggle">
+                <button id="standardBtn" class="mode-btn active" onclick="switchMode('standard')">Standard</button>
+                <button id="aiBtn" class="mode-btn" onclick="switchMode('ai')">AI Word Problem Solver</button>
+            </div>
+
+            <!-- Standard Calculator Mode -->
+            <div id="standardMode" class="mode-content active">
+                <div class="display">
+                    <input type="text" id="standardDisplay" readonly value="0">
+                </div>
+                <div class="buttons">
+                    <button class="btn btn-func" onclick="clearDisplay()">C</button>
+                    <button class="btn btn-func" onclick="backspace()">⌫</button>
+                    <button class="btn btn-operator" onclick="appendChar('(')">(</button>
+                    <button class="btn btn-operator" onclick="appendChar(')')">)</button>
+                    
+                    <button class="btn" onclick="appendChar('7')">7</button>
+                    <button class="btn" onclick="appendChar('8')">8</button>
+                    <button class="btn" onclick="appendChar('9')">9</button>
+                    <button class="btn btn-operator" onclick="appendChar('/')">÷</button>
+                    
+                    <button class="btn" onclick="appendChar('4')">4</button>
+                    <button class="btn" onclick="appendChar('5')">5</button>
+                    <button class="btn" onclick="appendChar('6')">6</button>
+                    <button class="btn btn-operator" onclick="appendChar('*')">×</button>
+                    
+                    <button class="btn" onclick="appendChar('1')">1</button>
+                    <button class="btn" onclick="appendChar('2')">2</button>
+                    <button class="btn" onclick="appendChar('3')">3</button>
+                    <button class="btn btn-operator" onclick="appendChar('-')">−</button>
+                    
+                    <button class="btn" onclick="appendChar('0')">0</button>
+                    <button class="btn" onclick="appendChar('.')">.</button>
+                    <button class="btn btn-equals" onclick="calculate()">=</button>
+                    <button class="btn btn-operator" onclick="appendChar('+')">+</button>
+                </div>
+            </div>
+
+            <!-- AI Word Problem Solver Mode -->
+            <div id="aiMode" class="mode-content">
+                <div class="ai-input-section">
+                    <label for="problemInput">Enter your word problem:</label>
+                    <textarea 
+                        id="problemInput" 
+                        placeholder="Example: If Sarah has 25 apples and gives away 30% of them, how many does she have left?&#10;&#10;Try questions like:&#10;• John makes $15 per hour. If he works 8 hours, how much does he earn?&#10;• What is 20% of 250?&#10;• A shirt costs $40. With a 15% discount, what's the final price?"
+                        rows="4"
+                    ></textarea>
+                    <button class="solve-btn" onclick="solveWordProblem()">Solve Problem</button>
+                </div>
+
+                <div id="aiResult" class="ai-result hidden">
+                    <h3>Result: <span id="resultValue"></span></h3>
+                    <div class="explanation">
+                        <h4>Step-by-Step Explanation:</h4>
+                        <pre id="explanationText"></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Buttons -->
+            <div class="bottom-buttons">
+                <button class="bottom-btn" onclick="showHistory()">📜 History</button>
+                <button class="bottom-btn" onclick="showAbout()">ℹ️ About</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- History Modal -->
+    <div id="historyModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Calculation History</h2>
+                <span class="close" onclick="closeModal('historyModal')">&times;</span>
+            </div>
+            <div id="historyContent" class="modal-body"></div>
+            <div class="modal-footer">
+                <button class="modal-btn btn-danger" onclick="clearHistory()">Clear All History</button>
+                <button class="modal-btn" onclick="closeModal('historyModal')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Modal -->
+    <div id="aboutModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>About AI Calculator</h2>
+                <span class="close" onclick="closeModal('aboutModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <h3>Features:</h3>
+                <ul>
+                    <li>🧮 <strong>Standard Calculator:</strong> Basic arithmetic operations</li>
+                    <li>🤖 <strong>AI Word Problem Solver:</strong> Understands natural language math questions</li>
+                    <li>📊 <strong>Supported Problem Types:</strong>
+                        <ul>
+                            <li>Percentages & Discounts</li>
+                            <li>Rate Problems (wages, costs)</li>
+                            <li>Comparisons (twice, half, more than)</li>
+                            <li>Multi-step Problems</li>
+                            <li>Averages & Statistics</li>
+                            <li>Equation Solving</li>
+                        </ul>
+                    </li>
+                    <li>📜 <strong>History Tracking:</strong> Review past calculations</li>
+                </ul>
+                <p style="margin-top: 20px; font-size: 0.9em; color: #888;">
+                    Built with HTML, CSS, and JavaScript • Powered by AI reasoning
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn" onclick="closeModal('aboutModal')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="calculator.js"></script>
+</body>
+</html>

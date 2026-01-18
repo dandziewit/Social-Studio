@@ -1,20 +1,23 @@
-# Social Media Content Prepper
+# Social Studio
 
-A portfolio-quality Python application that prepares social media content (videos, images, captions, hashtags) for upload into FREE social media schedulers like Buffer, Publer, Later, and Meta Business Suite.
+🎵 **Audio Clips + Photos** with **Auto Hashtags** for Social Media Schedulers
+
+A web-based tool that prepares audio clips and photos for social media, complete with auto-generated captions and hashtags. Export to Buffer, Publer, Later, or Meta Business Suite.
 
 **🚨 IMPORTANT: This tool does NOT post directly to social media. It only prepares scheduler-ready content.**
 
-[![Python Version](https://img.shields.io/badge/python-3.7%2B-blue)]()
+[![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)]()
 [![License](https://img.shields.io/badge/license-MIT-green)]()
 
 ---
 
-## � Quick Start for Non-Technical Users
+## 🚀 Quick Start
 
-**Just want to use it?** Read [START_HERE.md](START_HERE.md) - Super simple guide!
+**Windows users**: Double-click `START_WEB.bat`  
+**Mac/Linux users**: Run `./START_WEB.sh`  
+**Or manually**: `streamlit run app.py`
 
-**Windows users**: Just double-click `START.bat` and follow the prompts!  
-**Mac/Linux users**: Double-click `START.sh` (or run `./START.sh` in terminal)
+Then open: **http://localhost:8501**
 
 ---
 
