@@ -7,17 +7,17 @@ import streamlit as st
 import logging
 from pathlib import Path
 import sys
-
-# Add src directory to path
-sys.path.insert(0, str(Path(__file__).parent / 'src'))
-
-from src.config_manager import ConfigManager
-from src.content_processor import ContentProcessor
-from src.caption_generator import CaptionGenerator
-from src.export_manager import ExportManager
 import tempfile
 import base64
 from datetime import datetime
+
+# Add social_studio to path for imports
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
+from social_studio.config_manager import ConfigManager
+from social_studio.content_processor import ContentProcessor
+from social_studio.caption_generator import CaptionGenerator
+from social_studio.export_manager import ExportManager
 
 # Configure logging - minimize console output
 logging.basicConfig(
