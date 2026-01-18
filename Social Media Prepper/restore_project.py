@@ -17,6 +17,14 @@ import subprocess
 from pathlib import Path
 import shutil
 
+# Fix Windows console encoding for emojis
+if sys.platform == 'win32':
+    try:
+        sys.stdout.reconfigure(encoding='utf-8')
+        sys.stderr.reconfigure(encoding='utf-8')
+    except:
+        pass
+
 # Color codes for terminal output
 class Colors:
     GREEN = '\033[92m'
@@ -27,16 +35,28 @@ class Colors:
     BOLD = '\033[1m'
 
 def print_step(msg):
-    print(f"\n{Colors.BLUE}{Colors.BOLD}▶ {msg}{Colors.RESET}")
+    try:
+        print(f"\n{Colors.BLUE}{Colors.BOLD}> {msg}{Colors.RESET}")
+    except:
+        print(f"\n> {msg}")
 
 def print_success(msg):
-    print(f"{Colors.GREEN}✅ {msg}{Colors.RESET}")
+    try:
+        print(f"{Colors.GREEN}[OK] {msg}{Colors.RESET}")
+    except:
+        print(f"[OK] {msg}")
 
 def print_warning(msg):
-    print(f"{Colors.YELLOW}⚠️  {msg}{Colors.RESET}")
+    try:
+        print(f"{Colors.YELLOW}[WARN] {msg}{Colors.RESET}")
+    except:
+        print(f"[WARN] {msg}")
 
 def print_error(msg):
-    print(f"{Colors.RED}❌ {msg}{Colors.RESET}")
+    try:
+        print(f"{Colors.RED}[ERROR] {msg}{Colors.RESET}")
+    except:
+        print(f"[ERROR] {msg}")
 
 def check_python_version():
     """Check if Python version is 3.10+"""
@@ -423,32 +443,45 @@ def test_streamlit_app():
 
 def print_next_steps():
     """Print instructions for running the app"""
-    print(f"\n{Colors.GREEN}{Colors.BOLD}{'='*60}{Colors.RESET}")
-    print(f"{Colors.GREEN}{Colors.BOLD}🎉 SETUP COMPLETE!{Colors.RESET}")
-    print(f"{Colors.GREEN}{Colors.BOLD}{'='*60}{Colors.RESET}\n")
+    try:
+        print(f"\n{Colors.GREEN}{Colors.BOLD}{'='*60}{Colors.RESET}")
+        print(f"{Colors.GREEN}{Colors.BOLD}SETUP COMPLETE!{Colors.RESET}")
+        print(f"{Colors.GREEN}{Colors.BOLD}{'='*60}{Colors.RESET}\n")
+    except:
+        print("\n" + "="*60)
+        print("SETUP COMPLETE!")
+        print("="*60 + "\n")
     
-    print(f"{Colors.BOLD}Next Steps:{Colors.RESET}")
-    print(f"\n1. {Colors.BLUE}Run locally:{Colors.RESET}")
-    print(f"   {Colors.YELLOW}streamlit run app.py --server.port 8507{Colors.RESET}")
+    print(f"{Colors.BOLD}Next Steps:{Colors.RESET}" if Colors else "Next Steps:")
+    print(f"\n1. Run locally:")
+    print(f"   streamlit run app.py --server.port 8507")
     
-    print(f"\n2. {Colors.BLUE}Deploy to Streamlit Cloud:{Colors.RESET}")
-    print(f"   - Go to: {Colors.YELLOW}https://share.streamlit.io{Colors.RESET}")
+    print(f"\n2. Deploy to Streamlit Cloud:")
+    print(f"   - Go to: https://share.streamlit.io")
     print(f"   - Connect your GitHub repo")
-    print(f"   - Set main file: {Colors.YELLOW}app.py{Colors.RESET}")
+    print(f"   - Set main file: app.py")
     print(f"   - Deploy!")
     
-    print(f"\n3. {Colors.BLUE}Commit changes:{Colors.RESET}")
-    print(f"   {Colors.YELLOW}git add -A{Colors.RESET}")
-    print(f"   {Colors.YELLOW}git commit -m 'Automated project setup complete'{Colors.RESET}")
-    print(f"   {Colors.YELLOW}git push origin main{Colors.RESET}")
+    print(f"\n3. Commit changes:")
+    print(f"   git add -A")
+    print(f"   git commit -m 'Automated project setup complete'")
+    print(f"   git push origin main")
     
-    print(f"\n{Colors.GREEN}{'='*60}{Colors.RESET}\n")
+    try:
+        print(f"\n{Colors.GREEN}{'='*60}{Colors.RESET}\n")
+    except:
+        print("\n" + "="*60 + "\n")
 
 def main():
     """Main restoration workflow"""
-    print(f"\n{Colors.BOLD}{Colors.BLUE}{'='*60}")
-    print(f"🎬 SOCIAL STUDIO - AUTOMATED PROJECT SETUP")
-    print(f"{'='*60}{Colors.RESET}\n")
+    try:
+        print(f"\n{Colors.BOLD}{Colors.BLUE}{'='*60}")
+        print(f"SOCIAL STUDIO - AUTOMATED PROJECT SETUP")
+        print(f"{'='*60}{Colors.RESET}\n")
+    except:
+        print("\n" + "="*60)
+        print("SOCIAL STUDIO - AUTOMATED PROJECT SETUP")
+        print("="*60 + "\n")
     
     # Step 1: Check Python version
     if not check_python_version():

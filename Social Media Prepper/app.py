@@ -1,19 +1,18 @@
-﻿"""
+"""
 Social Studio - Web Interface
 Browser-based version of Social Studio
 """
 
-import streamlit as st
-
-# Page config MUST be first Streamlit command
-st.set_page_config(page_title="Social Studio", layout="wide")
-
 import yaml
+import streamlit as st
 import logging
 from pathlib import Path
 import tempfile
 import base64
 from datetime import datetime
+
+# Validation check for Streamlit Cloud
+st.write("YAML version:", yaml.__version__)
 
 from social_studio.config_manager import ConfigManager
 from social_studio.content_processor import ContentProcessor
