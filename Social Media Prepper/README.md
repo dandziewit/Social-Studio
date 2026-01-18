@@ -47,7 +47,27 @@ A complete web-based application for creating, editing, and exporting social med
 - Python 3.10+
 - pip
 
-### Installation
+### Automated Setup (Recommended)
+
+**Windows:**
+```bash
+setup_and_run.bat
+```
+
+**Linux/Mac:**
+```bash
+chmod +x setup_and_run.sh
+./setup_and_run.sh
+```
+
+The automated scripts will:
+1. Check Python version
+2. Create required directories
+3. Install dependencies
+4. Validate project structure
+5. Launch the app in your browser
+
+### Manual Installation
 
 1. **Clone the repository:**
 ```bash
@@ -55,18 +75,52 @@ git clone https://github.com/dandziewit/Social-Studio.git
 cd Social-Studio
 ```
 
-2. **Install dependencies:**
+2. **Run the restoration script:**
+```bash
+python restore_project.py
+```
+
+3. **Install dependencies:**
 ```bash
 pip install -r requirements.txt
 ```
 
-3. **Run the app:**
+4. **Run the app:**
 ```bash
 streamlit run app.py
 ```
 
-4. **Open in browser:**
+5. **Open in browser:**
 Navigate to `http://localhost:8501`
+
+## 🔧 Troubleshooting
+
+If you encounter any issues:
+
+1. **Run the automated restoration script:**
+```bash
+python restore_project.py
+```
+
+This will:
+- Validate and fix project structure
+- Create missing files
+- Check all dependencies
+- Test imports
+- Provide detailed error messages
+
+2. **Check Python version:**
+```bash
+python --version  # Should be 3.10 or higher
+```
+
+3. **Reinstall dependencies:**
+```bash
+pip install -r requirements.txt --upgrade
+```
+
+4. **Check for import errors:**
+The app will display debug information if modules fail to import
 
 ## 🌐 Streamlit Cloud Deployment
 
