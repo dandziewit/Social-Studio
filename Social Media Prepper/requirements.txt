@@ -1,18 +1,6 @@
-# Social Studio - Web Version Requirements
-
-# Core dependencies
-Pillow>=10.0.0          # Image processing
-PyYAML>=6.0             # Configuration file handling
-python-dateutil>=2.8.0  # Date utilities
-
-# Web UI
-streamlit>=1.28.0       # Web browser interface
-
-# Optional dependencies
-openai>=1.0.0           # AI-powered captions (optional)
-
-# Note: FFmpeg is required for audio/video processing
-# Install FFmpeg separately from: https://ffmpeg.org/download.html
-# Windows: Download and add to PATH
-# Mac: brew install ffmpeg
-# Linux: sudo apt-get install ffmpeg
+streamlit
+pyyaml
+pillow
+numpy
+opencv-python-headless
+ffmpeg-python

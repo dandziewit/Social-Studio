@@ -3,16 +3,16 @@ Social Studio - Web Interface
 Browser-based version of Social Studio
 """
 
+import yaml
 import streamlit as st
 import logging
 from pathlib import Path
-import sys
 import tempfile
 import base64
 from datetime import datetime
 
-# Add social_studio to path for imports
-sys.path.insert(0, str(Path(__file__).parent.parent))
+# Validation check for Streamlit Cloud
+st.write("YAML version:", yaml.__version__)
 
 from social_studio.config_manager import ConfigManager
 from social_studio.content_processor import ContentProcessor
