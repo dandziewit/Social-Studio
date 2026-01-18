@@ -1,0 +1,58 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+ENV/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/*.log
+
+# Output files (keep structure, ignore content)
+output/*/*/*
+!output/*/.gitkeep
+scheduler_export/*.csv
+scheduler_export/*.json
+scheduler_export/*.txt
+!scheduler_export/.gitkeep
+
+# Input files (optional - uncomment if you don't want to commit input files)
+# input/*/*/*
+# !input/*/.gitkeep
+
+# Config with secrets (if you add API keys)
+# config/config.yaml
+
+# FFmpeg temp files
+*.ffmpeg_temp

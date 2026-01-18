@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ARC Platform - Browser Client Demo</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      overflow: hidden;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 30px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .header p {
+      opacity: 0.9;
+      font-size: 14px;
+    }
+
+    .content {
+      padding: 30px;
+    }
+
+    .section {
+      margin-bottom: 30px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: #333;
+    }
+
+    .input-group {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    select, input, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      transition: border-color 0.3s;
+    }
+
+    select:focus, input:focus, textarea:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    button {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    button:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 20px;
+      color: #667eea;
+      font-weight: 600;
+    }
+
+    .response-box {
+      background: #f5f5f5;
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 15px;
+      border-left: 4px solid #667eea;
+    }
+
+    .response-box.error {
+      border-left-color: #e74c3c;
+      background: #fee;
+    }
+
+    .response-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .response-output {
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      line-height: 1.6;
+      color: #333;
+    }
+
+    .metadata {
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid #ddd;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .metadata-item {
+      display: inline-block;
+      margin-right: 15px;
+      margin-bottom: 5px;
+    }
+
+    .history-item {
+      background: white;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 10px;
+    }
+
+    .history-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 10px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .badge.success {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .badge.error {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    .confidence {
+      display: inline-block;
+      padding: 4px 8px;
+      background: #667eea;
+      color: white;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🤖 ARC Platform</h1>
+      <p>AI Orchestration Platform - Browser Client Demo</p>
+    </div>
+
+    <div class="content">
+      <!-- Task Submission -->
+      <div class="section">
+        <div class="section-title">Submit Task</div>
+        
+        <div class="input-group">
+          <select id="taskType">
+            <option value="default">Auto-detect</option>
+            <option value="reasoning">Reasoning</option>
+            <option value="coding">Coding</option>
+            <option value="creative">Creative</option>
+            <option value="factual">Factual</option>
+            <option value="multi-modal">Multi-modal</option>
+          </select>
+        </div>
+
+        <textarea id="prompt" placeholder="Enter your prompt here..."></textarea>
+
+        <div class="input-group" style="margin-top: 10px;">
+          <input type="text" id="sessionId" placeholder="Session ID (optional)" />
+          <button id="submitBtn" onclick="submitTask()">Send Task</button>
+        </div>
+      </div>
+
+      <!-- Response -->
+      <div class="section">
+        <div class="section-title">Response</div>
+        <div id="response"></div>
+      </div>
+
+      <!-- History -->
+      <div class="section">
+        <div class="section-title">
+          Session History
+          <button onclick="loadHistory()" style="float: right; padding: 8px 16px;">Refresh</button>
+        </div>
+        <div id="history"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Configuration
+    const API_BASE_URL = 'http://localhost:3000';
+
+    // Generate or retrieve session ID
+    let sessionId = sessionStorage.getItem('arc_session_id');
+    if (!sessionId) {
+      sessionId = `session-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+      sessionStorage.setItem('arc_session_id', sessionId);
+    }
+    document.getElementById('sessionId').value = sessionId;
+
+    /**
+     * Submit a task to the ARC API
+     */
+    async function submitTask() {
+      const prompt = document.getElementById('prompt').value.trim();
+      const taskType = document.getElementById('taskType').value;
+      const sessionId = document.getElementById('sessionId').value.trim();
+
+      if (!prompt) {
+        alert('Please enter a prompt');
+        return;
+      }
+
+      // Disable button and show loading
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      btn.textContent = 'Processing...';
+      
+      document.getElementById('response').innerHTML = '<div class="loading">⏳ Processing your request...</div>';
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/task`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            task: {
+              taskId: `task-${Date.now()}`,
+              taskType: taskType,
+              payload: {
+                prompt: prompt
+              }
+            },
+            sessionId: sessionId || undefined
+          })
+        });
+
+        const data = await response.json();
+
+        // Display response
+        displayResponse(data);
+
+        // Reload history if session is used
+        if (sessionId) {
+          loadHistory();
+        }
+
+      } catch (error) {
+        document.getElementById('response').innerHTML = `
+          <div class="response-box error">
+            <div class="response-header">
+              <span class="badge error">Error</span>
+            </div>
+            <div class="response-output">
+              Failed to connect to API: ${error.message}
+            </div>
+          </div>
+        `;
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Send Task';
+      }
+    }
+
+    /**
+     * Display task response
+     */
+    function displayResponse(data) {
+      const responseDiv = document.getElementById('response');
+
+      if (data.success) {
+        const result = data.data;
+        responseDiv.innerHTML = `
+          <div class="response-box">
+            <div class="response-header">
+              <span class="badge success">Success</span>
+              <span class="confidence">Confidence: ${(result.confidence * 100).toFixed(1)}%</span>
+            </div>
+            <div class="response-output">${escapeHtml(result.output)}</div>
+            <div class="metadata">
+              <span class="metadata-item">📋 Task ID: ${result.taskId}</span>
+              <span class="metadata-item">⚡ Time: ${result.metadata?.processingTimeMs || 0}ms</span>
+              <span class="metadata-item">🤖 Model: ${result.metadata?.model || 'Unknown'}</span>
+              <span class="metadata-item">🎯 Adapter: ${result.metadata?.adapter || 'Unknown'}</span>
+            </div>
+          </div>
+        `;
+      } else {
+        responseDiv.innerHTML = `
+          <div class="response-box error">
+            <div class="response-header">
+              <span class="badge error">Failed</span>
+            </div>
+            <div class="response-output">${escapeHtml(data.error)}</div>
+          </div>
+        `;
+      }
+    }
+
+    /**
+     * Load session history
+     */
+    async function loadHistory() {
+      const sessionId = document.getElementById('sessionId').value.trim();
+
+      if (!sessionId) {
+        document.getElementById('history').innerHTML = '<p style="color: #999;">No session ID specified</p>';
+        return;
+      }
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/session/${sessionId}/history`);
+        const data = await response.json();
+
+        if (data.success && data.data.history.length > 0) {
+          const historyHtml = data.data.history.map(entry => `
+            <div class="history-item">
+              <div class="history-header">
+                <span class="badge ${entry.response.success ? 'success' : 'error'}">
+                  ${entry.response.success ? 'Success' : 'Failed'}
+                </span>
+                <span>${new Date(entry.timestamp).toLocaleTimeString()}</span>
+              </div>
+              <div style="margin-bottom: 8px;">
+                <strong>Prompt:</strong> ${escapeHtml(entry.task.payload.prompt || 'N/A').substring(0, 100)}...
+              </div>
+              <div>
+                <strong>Response:</strong> ${escapeHtml(String(entry.response.output || entry.response.error || 'N/A')).substring(0, 150)}...
+              </div>
+            </div>
+          `).join('');
+
+          document.getElementById('history').innerHTML = historyHtml;
+        } else {
+          document.getElementById('history').innerHTML = '<p style="color: #999;">No history available for this session</p>';
+        }
+
+      } catch (error) {
+        document.getElementById('history').innerHTML = `<p style="color: #e74c3c;">Error loading history: ${error.message}</p>`;
+      }
+    }
+
+    /**
+     * Escape HTML to prevent XSS
+     */
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    /**
+     * Allow Enter to submit (Shift+Enter for new line)
+     */
+    document.getElementById('prompt').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        submitTask();
+      }
+    });
+
+    // Load history on page load
+    window.addEventListener('load', () => {
+      if (sessionId) {
+        loadHistory();
+      }
+    });
+  </script>
+</body>
+</html>
