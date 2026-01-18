@@ -1,0 +1,25 @@
+
+============================================================
+UPLOAD INSTRUCTIONS FOR BUFFER
+============================================================
+
+Exported Files:
+  - CSV: C:\Users\Damiel Dziewit\.vscode\projects\Social Media Prepper\scheduler_export\buffer_posts_20260106_232831.csv
+  - JSON: C:\Users\Damiel Dziewit\.vscode\projects\Social Media Prepper\scheduler_export\buffer_posts_20260106_232831.json
+
+How to Upload to Buffer:
+1. Log in to your Buffer account (buffer.com)
+2. Go to Settings → Posting Schedule
+3. Click 'Bulk Upload' or 'Import Posts'
+4. Upload the CSV file
+5. Map the CSV columns to Buffer fields:
+   - text → Post Text
+   - media_path → Media
+   - profile → Profile/Account
+   - scheduled_at → Schedule Time
+6. Review posts and confirm upload
+7. Manually upload media files if required
+
+Note: You may need to upload media files separately depending on your Buffer plan.
+
+============================================================

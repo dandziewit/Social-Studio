@@ -1,0 +1,126 @@
+# Social Studio Configuration
+
+# Brand Information
+brand:
+  name: "Your Brand"
+  tagline: "Creating Amazing Content"
+  
+# Default Platforms
+default_platforms:
+  - instagram
+  - tiktok
+
+# Platform Settings
+platforms:
+  instagram:
+    enabled: true
+    max_duration: 60
+    aspect_ratios:
+      - "9:16"  # Stories/Reels
+      - "1:1"   # Feed
+      - "4:5"   # Feed
+  
+  tiktok:
+    enabled: true
+    max_duration: 60
+    aspect_ratios:
+      - "9:16"
+  
+  facebook:
+    enabled: true
+    max_duration: 240
+    aspect_ratios:
+      - "16:9"
+      - "1:1"
+  
+  youtube:
+    enabled: true
+    max_duration: 600
+    aspect_ratios:
+      - "16:9"
+      - "9:16"  # Shorts
+  
+  twitter:
+    enabled: true
+    max_duration: 140
+    aspect_ratios:
+      - "16:9"
+      - "1:1"
+
+# Caption Templates
+caption_templates:
+  default:
+    - "Check this out! 🎬"
+    - "New content alert! 🔥"
+    - "Don't miss this! ✨"
+  
+  inspirational:
+    - "Keep pushing forward! 💪"
+    - "Your journey starts here! 🚀"
+    - "Believe in yourself! ⭐"
+  
+  promotional:
+    - "Limited time offer! 🎉"
+    - "Get yours now! 🛍️"
+    - "Don't wait! ⏰"
+
+# Hashtag Sets
+hashtag_sets:
+  general:
+    - "#content"
+    - "#creative"
+    - "#socialmedia"
+    - "#viral"
+    - "#trending"
+  
+  lifestyle:
+    - "#lifestyle"
+    - "#inspiration"
+    - "#motivation"
+    - "#daily"
+    - "#life"
+  
+  business:
+    - "#entrepreneur"
+    - "#business"
+    - "#success"
+    - "#marketing"
+    - "#branding"
+
+# Preferred Post Times
+preferred_post_times:
+  instagram:
+    - "09:00"
+    - "12:00"
+    - "18:00"
+  
+  tiktok:
+    - "07:00"
+    - "16:00"
+    - "21:00"
+  
+  facebook:
+    - "13:00"
+    - "15:00"
+    - "19:00"
+
+# Processing Settings
+processing:
+  audio:
+    default_duration: 15
+    max_duration: 60
+    sample_rate: 44100
+  
+  video:
+    default_duration: 30
+    max_duration: 60
+    fps: 30
+    quality: "high"
+  
+  image:
+    max_size: 10485760  # 10MB
+    formats:
+      - "jpg"
+      - "jpeg"
+      - "png"
+      - "webp"
