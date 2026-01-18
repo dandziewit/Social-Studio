@@ -3,6 +3,7 @@ Social Studio - Web Interface
 Browser-based version of Social Studio
 """
 
+import sys
 import yaml
 import streamlit as st
 import logging
@@ -14,13 +15,30 @@ from datetime import datetime
 # Page config must be first
 st.set_page_config(page_title="Social Studio", layout="wide")
 
-# Validation check for Streamlit Cloud
-st.write("YAML version:", yaml.__version__)
+# Debug: Print sys.path for troubleshooting
+st.write("**Debug Info:**")
+st.write(f"Python Path: {sys.executable}")
+st.write(f"Current Directory: {Path.cwd()}")
+st.write(f"App File Location: {Path(__file__).parent}")
+st.write(f"YAML version: {yaml.__version__}")
 
-from social_studio.config_manager import ConfigManager
-from social_studio.content_processor import ContentProcessor
-from social_studio.caption_generator import CaptionGenerator
-from social_studio.export_manager import ExportManager
+# Add project root to path if needed
+project_root = Path(__file__).parent
+if str(project_root) not in sys.path:
+    sys.path.insert(0, str(project_root))
+    st.write(f"✅ Added to sys.path: {project_root}")
+
+st.write(f"sys.path: {sys.path[:3]}")  # Show first 3 entries
+
+try:
+    from social_studio.config_manager import ConfigManager
+    from social_studio.content_processor import ContentProcessor
+    from social_studio.caption_generator import CaptionGenerator
+    from social_studio.export_manager import ExportManager
+    st.success("✅ All modules imported successfully!")
+except ImportError as e:
+    st.error(f"❌ Import Error: {e}")
+    st.stop()
 
 # Configure logging - minimize console output
 logging.basicConfig(
